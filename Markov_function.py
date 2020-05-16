@@ -71,3 +71,4 @@ import matplotlib.pyplot as plt
 for i in range(0,lvec):
     plt.scatter(range(0,ntrials), ll[i], s = 1)
 
+plt.show()
