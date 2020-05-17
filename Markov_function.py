@@ -1,5 +1,6 @@
 # 5/16/12020
-# absorbing matrix function with more than one absorbing states
+# function for producing a transition state matrix
+# with one or more than one absorbing states
 
 import random
 import numpy as np
