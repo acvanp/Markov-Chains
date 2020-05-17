@@ -10,11 +10,13 @@ def absorbing_matrix(lvec, abstates):
     m = list()
 
     for k in range(0,lvec): # len.vector - 1 in order to have a spare state for the absorbing state
-        v = [random.random()]
-        for i in range(0,lvec-1):
+        v = [0]
+        v = np.append(v, random.random())
+        for i in range(0,lvec-2):
             if i == lvec - 1:
                 v = np.append(v, 1-sum(v))
             else: v = np.append(v, random.uniform(0,1-sum(v)))
+        random.shuffle(v) # shuffle v
         m = np.append(m, v)
 
     shape = (lvec, lvec )
@@ -25,13 +27,10 @@ def absorbing_matrix(lvec, abstates):
 
     for i in range(0, len(abstates)):
         x = int(abstates[i])
-        m[x][range(0,len(m))]= 0
-        m = np.transpose(m)
-        m[abstates[i]][abstates[i]] = 1
-        m = np.transpose(m)
-        m = np.transpose(m)
-        m = np.transpose(m)
-        
+        m[x][range(0,len(m))] = 0
+        m[abstates[i]][abstates[i]] = 1     
+    
+    #m = np.transpose(m)
     return m
 	
 
@@ -43,14 +42,13 @@ abstates = 2 # Provide the number of absorbing states
 # Markov chain transition matrix
 m = absorbing_matrix(lvec, abstates)
 
-
 # Run the experiment over so many trials
 # Define the number of trials
 
-ntrials = 100 # Write value here
+ntrials = 1000 # Write value here
 
 # state matrix s
-s = random.sample(range(0,100), k = lvec )
+s = random.sample(range(1,99), k = lvec )
 
 ll = list(s)
 
@@ -64,11 +62,9 @@ ll = ll.reshape(shape)
 from pandas import DataFrame
 ll = DataFrame(np.array(ll))
 
-
-
 import matplotlib.pyplot as plt
 
 for i in range(0,lvec):
-    plt.scatter(range(0,ntrials), ll[i], s = 1)
+    plt.scatter(range(0,ntrials), ll[i], s = 10)
 
 plt.show()
